@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Todo sobre Tesla</title>
+	        <meta name="description" content="Ejemplo un juego de preguntas tipo trivial que utiliza Javascript en el que tanto las preguntas como las respuestas se van reordenando aleatoriamente">
+
+<!-- Latest compiled and minified JS -->
+<script src="https://code.jquery.com/jquery.js"></script>
+
+
+</head>
+<body>
+<h1>¿Cuánto conoces a Tesla?</h1>
+	<div id="pregunta"></div>
+	<div id="respuestas"></div>
+
+<input type="button" value="a ver si acerté" onclick="comprobar()">
+	<script>
+		var preguntas = [
+		"¿Donde nacio Nikola Tesla?",
+		"¿Para qué famoso científico trabajó Tesla?",
+		"Su invento mas conocido es ...",
+		"Una de sus frases no fue pronunciada por Nikola Tesla, ¿Cuál?",
+		"¿Qué enfermedad padecia?",
+		"¿Cómo se llamaba el laboratorio en el que Tesla intentó proveer energia électrica gratuita para todos?",
+		"Tesla trabajo para Edison, pero renuncio rapidamente. ¿Por qué?",
+		"¿Qué salvajada llevo a cabo Edison para inventar desacreditar la corriente alterna de Tesla?",
+		"Aproximadamente, ¿Cuantas patentes registro Tesla a lo largo de su vida?",
+		"¿Cómo murió?",
+		"¿Quien usó el sistema de corriente alterna de Nikola Tesla en la Exposición Colombiana Mundial en Chicago en 1893?"
+
+		];
+		var respuestas = [
+		["En smijan, Croacia", "San francisco, Campeche", "En Palermo, Italia", "En Vladivostok, Rusia"],
+		["Para Thomas Alva Edison", "Para Sindy Sarabia", "Para Albert Einstein", "Para Henrich Göbel"],
+		["La corriente alterna", "La bombilla de Luz", "La corriente Continua", "La maquina de vapor"],
+		["Nunca hice nada por casualidad, ni ninguno de mis inventos llegaron por accidente, llegaron por el trabajo", "Solo se que no se nada", "La comprensión mutua sería enormemente facilitada por el uso de una lengua universal", "La vida es y siempre seguira siendo una ecuacion incapaz de resolver, pero tiene ciertos factores que conocemos"],
+		["Transtorno Obsesivo Compusivo(TOC)", "Esquisofrenia", "Cancer", "Psoriasis"],
+		["Wardenclyffe", "Hindenburg", "Weschampshire", "Mill Valley"],
+		["Porque renego de un acuerdo financiero entre ambos", "Porque las condiciones de trabajo eran muy malas", "Porque Edison Insulto a la madre de Tesla", "Por la Religion"],
+		["Electrocuto a un Elefante", "Electrocuto un caballo", "Electrocuto un chinpance", "Desafió al mono mascota de Tesla a un duelo"],
+		["300 patentes", "1000 patentes", "250 patentes", "800 patentes"],
+		["De un infarto Miocardio", "De gota", "De diabetes", "De sida"],
+		["George Westinghouse","Mark Twain", "Eduardo Garcia", "Nathaniel Hawthorne"]
+
+		];
+jugar();
+
+		var indicie_respuesta_correcta;
+
+function jugar(){
+			var indice_aleatorio = Math.floor(Math.random()*preguntas.length);
+
+
+		var respuestas_posibles = respuestas[indice_aleatorio];
+
+
+		var posiciones = [0,1,2,3];
+		var respuestas_reordenadas = [];
+
+		var ya_se_metio = false;
+		for(i in respuestas_posibles){
+			var posicion_aleatoria = Math.floor(Math.random()*posiciones.length);
+			if(posicion_aleatoria==0 && ya_se_metio == false){
+				indicie_respuesta_correcta =i;
+				ya_se_metio = true;
+			}
+			respuestas_reordenadas[i] = respuestas_posibles[posiciones[posicion_aleatoria]];
+			posiciones.splice(posicion_aleatoria, 1);
+		}
+
+		var txt_respuestas="";
+		for(i in respuestas_reordenadas){
+			txt_respuestas += '<input type="radio" name="pp" value="'+i+'"><label>'+respuestas_reordenadas[i]+'</label><br>';
+		}
+
+		document.getElementById("respuestas").innerHTML = txt_respuestas;
+		document.getElementById("pregunta").innerHTML = preguntas[indice_aleatorio];
+
+}
+function comprobar(){
+	var respuesta = $("input[type=radio]:checked").val();
+
+	//alert(respuesta);
+	//alert(indicie_respuesta_correcta);
+	if(respuesta ==indicie_respuesta_correcta){
+		alert("Correcto!");
+	}else{
+		alert("Sigue mejor viviendo sin corriente");
+	}
+	jugar();
+}
+	</script>
+
+</body>
+</html>
